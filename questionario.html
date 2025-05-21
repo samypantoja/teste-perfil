@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste de Perfil de Concurseiro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>Descubra seu Perfil de Concurseiro</h1>
+
+    <form id="quizForm">
+      <div class="question">
+        <p>1. Como você costuma estudar?</p>
+        <label><input type="radio" name="q1" value="A"> Tento estudar tudo de uma vez só</label>
+        <label><input type="radio" name="q1" value="B"> Faço um plano com metas semanais</label>
+        <label><input type="radio" name="q1" value="C"> Estudo horas seguidas sem parar</label>
+        <label><input type="radio" name="q1" value="D"> Estudo quando sobra tempo</label>
+      </div>
+
+      <div class="question">
+        <p>2. Qual sua maior dificuldade?</p>
+        <label><input type="radio" name="q2" value="A"> Ansiedade com o volume de conteúdo</label>
+        <label><input type="radio" name="q2" value="B"> Querer fazer tudo com perfeição</label>
+        <label><input type="radio" name="q2" value="C"> Cansaço e esgotamento</label>
+        <label><input type="radio" name="q2" value="D"> Falta de rotina e organização</label>
+      </div>
+
+      <div class="question">
+        <p>3. Como você reage após um dia improdutivo?</p>
+        <label><input type="radio" name="q3" value="A"> Me culpo e tento compensar tudo no outro dia</label>
+        <label><input type="radio" name="q3" value="B"> Analiso o que deu errado e reajusto meu plano</label>
+        <label><input type="radio" name="q3" value="C"> Sinto vontade de desistir</label>
+        <label><input type="radio" name="q3" value="D"> Tento recomeçar, mas acabo me enrolando</label>
+      </div>
+
+      <div class="question">
+        <p>4. Como você organiza seu tempo de estudo?</p>
+        <label><input type="radio" name="tempo" value="B"> Tenho um cronograma bem definido</label>
+        <label><input type="radio" name="tempo" value="C">  Sigo um plano, mas com certa flexibilidade</label>
+        <label><input type="radio" name="tempo" value="D">  Estudo quando dá ou quando lembro</label>
+        <label><input type="radio" name="tempo" value="A">  Estudo o máximo que puder no tempo disponível</label>
+      </div>
+
+      <div class="question">
+        <p>5. Qual seu maior desafio ao estudar?</p>
+        <label><input type="radio" name="desafio" value="A">  Manter o foco</label>
+        <label><input type="radio" name="desafio" value="C">  Falta de tempo</label>
+        <label><input type="radio" name="desafio" value="D">  Falta de motivação</label>
+        <label><input type="radio" name="desafio" value="B">  Não tenho grandes dificuldades</label>
+      </div>
+
+      <div class="question">
+        <p>6. Como você costuma revisar o conteúdo estudado?</p>
+        <label><input type="radio" name="revisao" value="A">  Faço resumos e releio</label>
+        <label><input type="radio" name="revisao" value="B">  Faço muitas questões</label>
+        <label><input type="radio" name="revisao" value="C">  Ensino outra pessoa</label>
+        <label><input type="radio" name="revisao" value="D">  Não costumo revisar</label>
+      </div>
+
+      <div class="question">
+        <p>7. Você estuda com materiais físicos ou digitais?</p>
+        <label><input type="radio" name="materiais" value="C">  Só materiais digitais (vídeos, PDFs, apps)</label>
+        <label><input type="radio" name="materiais" value="A">  Gosto mais de livros e apostilas impressas</label>
+        <label><input type="radio" name="materiais" value="B">  Uso um pouco dos dois</label>
+        <label><input type="radio" name="materiais" value="D">  Não uso nenhum</label>
+      </div>
+      <div class="question">
+        <p>5. Como você se sente em relação ao concurso que está estudando?</p>
+        <label><input type="radio" name="sentimento" value="B">  Confiante e motivado(a)</label>
+        <label><input type="radio" name="sentimento" value="A">  Ansioso(a), mas sigo firme</label>
+        <label><input type="radio" name="sentimento" value="D">  Desmotivado(a), penso em desistir</label>
+        <label><input type="radio" name="sentimento" value="C">  Inseguro (a), sempre acho que não estudei tudo</label>
+      </div>
+      
+      
+
+      <button type="button" onclick="mostrarResultado()">Ver Meu Perfil</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

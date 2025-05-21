@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Orientação para Concursos Públicos</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --tertiary-color: #ecf0f1;
+            --accent-color: #e67e22;
+            --success-color: #27ae60;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .progress-container {
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--secondary-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+        }
+        
+        .question h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            background-color: var(--tertiary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.selected {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-previous {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        
+        .btn-next {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-submit {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .result {
+            text-align: center;
+        }
+        
+        .result h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .area-match {
+            background-color: var(--tertiary-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .area-match h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+        
+        .study-tips {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .study-tips h4 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .study-tips ul {
+            padding-left: 20px;
+        }
+        
+        .study-tips li {
+            margin-bottom: 8px;
+        }
+        
+        .restart-btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Quiz de Orientação para Concursos Públicos</h1>
+            <p>Descubra qual área de concurso combina melhor com seu perfil</p>
+        </header>
+        
+        <div class="description">
+            <p>Responda às perguntas abaixo com sinceridade e ajudaremos você a identificar a área de concurso público mais adequada ao seu perfil, além de fornecer dicas personalizadas de estudo.</p>
+        </div>
+        
+        <div class="card" id="quiz-container">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <p class="text-right"><span id="current-question">1</span> de <span id="total-questions">10</span></p>
+            </div>
+            
+            <div id="questions-container"></div>
+            
+            <div class="buttons">
+                <button id="previous-btn" class="btn-previous" disabled>Anterior</button>
+                <button id="next-btn" class="btn-next">Próxima</button>
+                <button id="submit-btn" class="btn-submit hidden">Ver Resultado</button>
+            </div>
+        </div>
+        
+        <div class="card result hidden" id="result-container">
+            <h2>Seu Resultado</h2>
+            
+            <div class="area-match" id="primary-area">
+                <h3>Área Recomendada</h3>
+                <p id="primary-description"></p>
+            </div>
+            
+            <div class="area-match" id="secondary-area">
+                <h3>Área Alternativa</h3>
+                <p id="secondary-description"></p>
+            </div>
+            
+            <div class="study-tips">
+                <h4>Dicas de Estudo</h4>
+                <ul id="study-tips-list"></ul>
+            </div>
+            
+            <button class="restart-btn" id="restart-btn">Fazer o Quiz Novamente</button>
+        </div>
+    </div>
+    
+    <script>
+        // Banco de questões
+        const questions = [
+            {
+                id: 1,
+                text: "O que você valoriza mais em uma carreira pública?",
+                options: [
+                    { id: "a", text: "Estabilidade e segurança financeira", scores: { administrativo: 3, policial: 1, fiscal: 2, juridico: 2, educacao: 1 } },
+                    { id: "b", text: "Poder contribuir para a sociedade diretamente", scores: { administrativo: 1, policial: 3, fiscal: 1, juridico: 2, educacao: 3 } },
+                    { id: "c", text: "Possibilidade de crescimento profissional", scores: { administrativo: 2, policial: 2, fiscal: 3, juridico: 3, educacao: 1 } },
+                    { id: "d", text: "Desafios intelectuais constantes", scores: { administrativo: 1, policial: 2, fiscal: 2, juridico: 3, educacao: 3 } }
+                ]
+            },
+            {
+                id: 2,
+                text: "Como você se sente em relação à rotina diária?",
+                options: [
+                    { id: "a", text: "Prefiro uma rotina estável e previsível", scores: { administrativo: 3, policial: 0, fiscal: 2, juridico: 1, educacao: 2 } },
+                    { id: "b", text: "Gosto de variação e lidar com situações diferentes", scores: { administrativo: 1, policial: 3, fiscal: 1, juridico: 2, educacao: 2 } },
+                    { id: "c", text: "Prefiro um equilíbrio entre rotina e desafios", scores: { administrativo: 2, policial: 2, fiscal: 3, juridico: 2, educacao: 3 } },
+                    { id: "d", text: "Não me importo com rotina, desde que o trabalho seja significativo", scores: { administrativo: 1, policial: 2, fiscal: 1, juridico: 3, educacao: 3 } }
+                ]
+            },
+            {
+                id: 3,
+                text: "Qual área de conhecimento você tem mais facilidade ou interesse?",
+                options: [
+                    { id: "a", text: "Exatas (matemática, estatística, contabilidade)", scores: { administrativo: 2, policial: 1, fiscal: 3, juridico: 0, educacao: 1 } },
+                    { id: "b", text: "Humanas (direito, história, geografia)", scores: { administrativo: 1, policial: 1, fiscal: 1, juridico: 3, educacao: 3 } },
+                    { id: "c", text: "Gestão/Administração", scores: { administrativo: 3, policial: 1, fiscal: 2, juridico: 1, educacao: 1 } },
+                    { id: "d", text: "Ciências naturais e saúde", scores: { administrativo: 1, policial: 2, fiscal: 0, juridico: 0, educacao: 3 } }
+                ]
+            },
+            {
+                id: 4,
+                text: "Como você lida com pressão e prazos curtos?",
+                options: [
+                    { id: "a", text: "Mantenho a calma e consigo priorizar bem", scores: { administrativo: 2, policial: 3, fiscal: 2, juridico: 3, educacao: 2 } },
+                    { id: "b", text: "Prefiro ter tempo para analisar antes de agir", scores: { administrativo: 3, policial: 0, fiscal: 3, juridico: 2, educacao: 2 } },
+                    { id: "c", text: "Trabalho melhor sob pressão", scores: { administrativo: 1, policial: 3, fiscal: 1, juridico: 2, educacao: 1 } },
+                    { id: "d", text: "Depende do tipo de tarefa e da situação", scores: { administrativo: 2, policial: 2, fiscal: 2, juridico: 2, educacao: 3 } }
+                ]
+            },
+            {
+                id: 5,
+                text: "Como você se sente em relação a trabalhar com o público?",
+                options: [
+                    { id: "a", text: "Prefiro trabalhar internamente, com menos contato direto", scores: { administrativo: 3, policial: 0, fiscal: 2, juridico: 1, educacao: 0 } },
+                    { id: "b", text: "Gosto de atender e ajudar pessoas diretamente", scores: { administrativo: 1, policial: 2, fiscal: 1, juridico: 2, educacao: 3 } },
+                    { id: "c", text: "Não me importo, desde que possa contribuir para a sociedade", scores: { administrativo: 2, policial: 3, fiscal: 2, juridico: 2, educacao: 2 } },
+                    { id: "d", text: "Prefiro um trabalho que equilibre contato com público e trabalho interno", scores: { administrativo: 2, policial: 1, fiscal: 3, juridico: 3, educacao: 2 } }
+                ]
+            },
+            {
+                id: 6,
+                text: "Você está disposto(a) a assumir riscos físicos em sua profissão?",
+                options: [
+                    { id: "a", text: "Definitivamente não", scores: { administrativo: 3, policial: 0, fiscal: 3, juridico: 3, educacao: 3 } },
+                    { id: "b", text: "Sim, não tenho problema com isso", scores: { administrativo: 0, policial: 3, fiscal: 1, juridico: 0, educacao: 1 } },
+                    { id: "c", text: "Prefiro evitar, mas aceitaria se necessário", scores: { administrativo: 1, policial: 2, fiscal: 2, juridico: 1, educacao: 2 } },
+                    { id: "d", text: "Apenas se forem riscos controlados e com equipamentos adequados", scores: { administrativo: 1, policial: 2, fiscal: 2, juridico: 1, educacao: 1 } }
+                ]
+            },
+            {
+                id: 7,
+                text: "O que você pensa sobre trabalhar em regime de plantão ou horários não convencionais?",
+                options: [
+                    { id: "a", text: "Prefiro horário comercial fixo", scores: { administrativo: 3, policial: 0, fiscal: 3, juridico: 2, educacao: 2 } },
+                    { id: "b", text: "Não me importo com plantões ou horários alternativos", scores: { administrativo: 1, policial: 3, fiscal: 1, juridico: 1, educacao: 2 } },
+                    { id: "c", text: "Prefiro ter flexibilidade para organizar meu tempo", scores: { administrativo: 2, policial: 1, fiscal: 2, juridico: 2, educacao: 3 } },
+                    { id: "d", text: "Aceito se for compensado adequadamente", scores: { administrativo: 2, policial: 2, fiscal: 2, juridico: 2, educacao: 1 } }
+                ]
+            },
+            {
+                id: 8,
+                text: "Como você prefere trabalhar?",
+                options: [
+                    { id: "a", text: "Individualmente, com autonomia", scores: { administrativo: 2, policial: 1, fiscal: 3, juridico: 3, educacao: 1 } },
+                    { id: "b", text: "Em equipe, colaborando com colegas", scores: { administrativo: 2, policial: 3, fiscal: 1, juridico: 1, educacao: 3 } },
+                    { id: "c", text: "Prefiro um modelo híbrido entre trabalho individual e em equipe", scores: { administrativo: 3, policial: 2, fiscal: 2, juridico: 2, educacao: 2 } },
+                    { id: "d", text: "Liderando e coordenando equipes", scores: { administrativo: 2, policial: 3, fiscal: 2, juridico: 2, educacao: 3 } }
+                ]
+            },
+            {
+                id: 9,
+                text: "Como você se sente em relação a estudar e se atualizar constantemente?",
+                options: [
+                    { id: "a", text: "Adoro estudar e me manter atualizado(a)", scores: { administrativo: 2, policial: 2, fiscal: 3, juridico: 3, educacao: 3 } },
+                    { id: "b", text: "Prefiro aprender na prática", scores: { administrativo: 2, policial: 3, fiscal: 1, juridico: 1, educacao: 2 } },
+                    { id: "c", text: "Estudo quando necessário, mas não é minha atividade preferida", scores: { administrativo: 3, policial: 2, fiscal: 2, juridico: 1, educacao: 1 } },
+                    { id: "d", text: "Gosto de estudar áreas específicas que me interessam", scores: { administrativo: 2, policial: 1, fiscal: 2, juridico: 2, educacao: 2 } }
+                ]
+            },
+            {
+                id: 10,
+                text: "Qual faixa salarial é aceitável para você inicialmente?",
+                options: [
+                    { id: "a", text: "Entre R$ 2.000 e R$ 5.000", scores: { administrativo: 3, policial: 2, fiscal: 1, juridico: 1, educacao: 3 } },
+                    { id: "b", text: "Entre R$ 5.000 e R$ 10.000", scores: { administrativo: 2, policial: 3, fiscal: 2, juridico: 2, educacao: 2 } },
+                    { id: "c", text: "Acima de R$ 10.000", scores: { administrativo: 1, policial: 2, fiscal: 3, juridico: 3, educacao: 1 } },
+                    { id: "d", text: "O salário não é o mais importante para mim", scores: { administrativo: 2, policial: 1, fiscal: 1, juridico: 2, educacao: 3 } }
+                ]
+            }
+        ];
+        
+        // Informações das áreas
+        const areas = {
+            administrativo: {
+                title: "Área Administrativa",
+                description: "Você tem perfil para concursos na área administrativa, como analista ou técnico administrativo, assistente em ministérios, agências reguladoras e outros órgãos públicos. Estas carreiras oferecem estabilidade, rotina mais previsível e ambiente de trabalho controlado, ideal para quem valoriza organização e processos bem definidos.",
+                tips: [
+                    "Estude Direito Administrativo, Constitucional e Gestão Pública",
+                    "Foque em português, matemática e informática que são cobrados em quase todos os concursos",
+                    "Mantenha-se atualizado sobre a Lei 8.112/90 (Estatuto do Servidor Público Federal)",
+                    "Pratique redação oficial e conhecimentos de administração pública",
+                    "Considere os concursos de Ministérios, INSS, Tribunais (área administrativa) e Agências Reguladoras"
+                ]
+            },
+            policial: {
+                title: "Área Policial e Segurança Pública",
+                description: "Seu perfil combina com as carreiras policiais e de segurança pública, como Polícia Federal, Polícia Rodoviária Federal, Polícia Militar, Corpo de Bombeiros ou Guarda Municipal. Estas carreiras são ideais para quem gosta de adrenalina, trabalho variado e dinâmico, além de contribuir diretamente para a segurança da sociedade.",
+                tips: [
+                    "Prepare-se fisicamente desde já para os testes físicos rigorosos",
+                    "Estude Direito Penal, Processual Penal e Constitucional com profundidade",
+                    "Desenvolva habilidades de raciocínio lógico e tomada rápida de decisões",
+                    "Prepare-se psicologicamente para situações de estresse",
+                    "Considere concursos para Polícia Federal, PRF, Polícias Civis estaduais e Polícias Militares"
+                ]
+            },
+            fiscal: {
+                title: "Área Fiscal e Tributária",
+                description: "Você demonstra aptidão para a área fiscal e tributária, como Auditor Fiscal, Analista Tributário e carreiras semelhantes. Estas funções geralmente oferecem excelentes remunerações e são ideais para quem tem facilidade com números, leis e regulamentos, além de apreciar trabalho analítico detalhado.",
+                tips: [
+                    "Aprofunde-se em Direito Tributário, Contabilidade e Matemática Financeira",
+                    "Estude a legislação tributária federal, estadual ou municipal (dependendo do concurso)",
+                    "Desenvolva habilidades analíticas e atenção aos detalhes",
+                    "Conheça bem o Código Tributário Nacional e as principais leis complementares",
+                    "Considere concursos para Receita Federal, Receitas Estaduais e Municipais"
+                ]
+            },
+            juridico: {
+                title: "Área Jurídica",
+                description: "Seu perfil é compatível com carreiras jurídicas como Procurador, Defensor Público, Analista Judiciário ou Técnico Judiciário. Estas carreiras são ideais para quem tem interesse por direito, interpretação de leis e possui habilidade com textos e argumentação, oferecendo estabilidade e boas remunerações.",
+                tips: [
+                    "Estude todos os ramos do Direito, com ênfase no Direito Constitucional e Administrativo",
+                    "Acompanhe a jurisprudência dos principais tribunais (STF, STJ)",
+                    "Desenvolva excelente capacidade de interpretação de textos e escrita jurídica",
+                    "Pratique a elaboração de peças processuais (para carreiras específicas)",
+                    "Considere concursos para Tribunais, Procuradorias, Defensoria Pública e Ministério Público"
+                ]
+            },
+            educacao: {
+                title: "Área Educacional",
+                description: "Você tem um perfil adequado para a área educacional, como Professor, Pedagogo ou Técnico em Assuntos Educacionais. Estas carreiras são gratificantes para quem gosta de ensinar, pesquisar e contribuir para a formação de outras pessoas, oferecendo estabilidade e possibilidade de desenvolvimento contínuo.",
+                tips: [
+                    "Invista em formação pedagógica e didática",
+                    "Estude legislação educacional (LDB, PNE) e fundamentos da educação",
+                    "Mantenha-se atualizado sobre métodos de ensino e aprendizagem",
+                    "Desenvolva habilidades de comunicação e relacionamento interpessoal",
+                    "Considere concursos para Universidades Federais, Institutos Federais, Secretarias de Educação e INEP"
+                ]
+            }
+        };
+        
+        // Variáveis de controle
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let areaScores = {
+            administrativo: 0,
+            policial: 0,
+            fiscal: 0,
+            juridico: 0,
+            educacao: 0
+        };
+        
+        // Elementos DOM
+        const questionsContainer = document.getElementById('questions-container');
+        const progressBar = document.getElementById('progress');
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const previousBtn = document.getElementById('previous-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const primaryAreaElement = document.getElementById('primary-area');
+        const primaryDescriptionElement = document.getElementById('primary-description');
+        const secondaryAreaElement = document.getElementById('secondary-area');
+        const secondaryDescriptionElement = document.getElementById('secondary-description');
+        const studyTipsList = document.getElementById('study-tips-list');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        // Inicialização
+        function init() {
+            totalQuestionsElement.textContent = questions.length;
+            renderQuestion(currentQuestionIndex);
+            
+            // Event listeners
+            previousBtn.addEventListener('click', goToPreviousQuestion);
+            nextBtn.addEventListener('click', goToNextQuestion);
+            submitBtn.addEventListener('click', submitQuiz);
+            restartBtn.addEventListener('click', restartQuiz);
+        }
+        
+        // Renderiza a questão atual
+        function renderQuestion(index) {
+            const question = questions[index];
+            currentQuestionElement.textContent = index + 1;
+            
+            // Atualiza a barra de progresso
+            const progressPercentage = ((index + 1) / questions.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            
+            // Cria o HTML da questão
+            let questionHTML = `
+                <div class="question">
+                    <h2>${question.text}</h2>
+                    <div class="options">
+            `;
+            
+            question.options.forEach(option => {
+                const isSelected = userAnswers[index] === option.id;
+                questionHTML += `
+                    <div class="option ${isSelected ? 'selected' : ''}" data-option="${option.id}">
+                        ${option.text}
+                    </div>
+                `;
+            });
+            
+            questionHTML += `
+                    </div>
+                </div>
+            `;
+            
+            questionsContainer.innerHTML = questionHTML;
+            
+            // Adiciona event listeners para as opções
+            const optionElements = document.querySelectorAll('.option');
+            optionElements.forEach(optionElement => {
+                optionElement.addEventListener('click', () => {
+                    // Remove a classe 'selected' de todas as opções
+                    optionElements.forEach(el => el.classList.remove('selected'));
+                    
+                    // Adiciona a classe 'selected' à opção clicada
+                    optionElement.classList.add('selected');
+                    
+                    // Salva a resposta do usuário
+                    const optionId = optionElement.dataset.option;
+                    userAnswers[index] = optionId;
+                    
+                    // Habilita os botões apropriados
+                    if (index === questions.length - 1) {
+                        submitBtn.disabled = false;
+                    } else {
+                        nextBtn.disabled = false;
+                    }
+                });
+            });
+            
+            // Atualiza os botões
+            previousBtn.disabled = index === 0;
+            
+            // Verifica se já existe uma resposta para esta pergunta
+            if (userAnswers[index]) {
+                if (index === questions.length - 1) {
+                    submitBtn.disabled = false;
+                } else {
+                    nextBtn.disabled = false;
+                }
+            } else {
+                if (index === questions.length - 1) {
+                    submitBtn.disabled = true;
+                } else {
+                    nextBtn.disabled = true;
+                }
+            }
+            
+            // Mostra ou esconde o botão de enviar
+            if (index === questions.length - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+        }
+        
+        // Funções de navegação
+        function goToPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion(currentQuestionIndex);
+            }
+        }
+        
+        function goToNextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion(currentQuestionIndex);
+            }
+        }
+        
+        // Calcula os resultados
+        function calculateResults() {
+            // Reinicia as pontuações
+            Object.keys(areaScores).forEach(area => {
+                areaScores[area] = 0;
+            });
+            
+            // Calcula a pontuação com base nas respostas
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const selectedOption = question.options.find(option => option.id === userAnswer);
+                
+                if (selectedOption) {
+                    Object.entries(selectedOption.scores).forEach(([area, score]) => {
+                        areaScores[area] += score;
+                    });
+                }
+            });
+            
+            // Ordena as áreas pela pontuação
+            const sortedAreas = Object.entries(areaScores)
+                .sort((a, b) => b[1] - a[1])
+                .map(([area, score]) => ({
+                    area,
+                    score
+                }));
+            
+            return {
+                primaryArea: sortedAreas[0].area,
+                secondaryArea: sortedAreas[1].area,
+                scores: areaScores
+            };
+        }
+        
+        // Exibe os resultados
+        function displayResults(results) {
+            const primaryArea = areas[results.primaryArea];
+            const secondaryArea = areas[results.secondaryArea];
+            
+            // Área principal
+            primaryDescriptionElement.textContent = primaryArea.description;
+            
+            // Área secundária
+            secondaryDescriptionElement.textContent = secondaryArea.description;
+            
+            // Dicas de estudo
+            studyTipsList.innerHTML = '';
+            primaryArea.tips.forEach(tip => {
+                const listItem = document.createElement('li');
+                listItem.textContent = tip;
+                studyTipsList.appendChild(listItem);
+            });
+            
+            // Adiciona algumas dicas da área secundária
+            const secondaryTips = secondaryArea.tips.slice(0, 2);
+            secondaryTips.forEach(tip => {
+                const listItem = document.createElement('li');
+                listItem.textContent = tip;
+                studyTipsList.appendChild(listItem);
+            });
+            
+            // Exibe o container de resultado e esconde o container do quiz
+            quizContainer.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+        }
+        
+        // Submete o quiz
+        function submitQuiz() {
+            const results = calculateResults();
+            displayResults(results);
+        }
+        
+        // Reinicia o quiz
+        function restartQuiz() {
+            // Reinicia as variáveis
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            
+            // Reinicia os elementos visuais
+            quizContainer.classList.remove('hidden');
+            resultContainer.classList.add('hidden');
+            
+            // Renderiza a primeira questão
+            renderQuestion(currentQuestionIndex);
+        }
+        
+        // Inicializa o quiz
+        init();
+    </script>
+</body>
+</html>
