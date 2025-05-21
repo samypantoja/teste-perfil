@@ -212,26 +212,32 @@
             background-color: #a85202; 
             }
 
-        #btn-voltar {        
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 10px 60px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 20px;
-            margin-left: 50px;
-            display: inline-block;
-            text-align: center;
-            text-decoration: none; 
-            }
+   .quiz-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.quiz-buttons .restart-btn {
+    flex: 1 1 200px; /* Cresce igualmente com largura mínima de 200px */
+    max-width: 250px; /* Tamanho máximo para manter equilíbrio */
+    text-align: center;
+    text-decoration: none;
+}
 
 
-        #btn-voltar:hover {
-            background-color: #1d6fa5; 
-            }
+.voltar-btn {
+    background-color: var(--secondary-color);
+    text-align: center;
+    text-decoration: none;
+}
+
+.voltar-btn:hover {
+    background-color: #1d6fa5;
+}
+
 
         
         @media (max-width: 768px) {
@@ -300,8 +306,12 @@
                 <ul id="study-tips-list"></ul>
             </div>
             
-            <button class="restart-btn" id="restart-btn">Fazer o Quiz Novamente</button>
-            <a href="index.html" id="btn-voltar">Início</a>
+            <div class="quiz-buttons">
+                <button class="restart-btn" id="restart-btn">Fazer o Quiz Novamente</button>
+                <a href="index.html" class="restart-btn voltar-btn">Início</a>
+            </div>
+
+
         </div>
     </div>
     
