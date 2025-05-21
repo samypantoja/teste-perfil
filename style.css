@@ -48,6 +48,7 @@ button {
   display: block;
   font-size: 20px;
   font-family: "Josefin Sans", sans-serif;
+  white-space: nowrap;
   font-weight:bolder;
   margin: 30px auto;
   padding: 12px 120px;
@@ -69,4 +70,24 @@ button:hover {
   border-left: 5px solid #3498db;
   border-radius: 5px;
   font-size: 1.1em;
+}
+#btn-voltar {
+  display: inline-block;
+  padding: 8px 30px;
+  margin: 10px;
+  font-size: 20px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: bolder;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #424653;
+  color: white;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#btn-voltar:hover {
+  background-color: #032b57;
+  box-shadow: 0 4px 12px rgba(8, 39, 71, 0.6);
 }
